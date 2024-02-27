@@ -1,0 +1,22 @@
+version: '1'
+services:
+  sri-backend:
+    build:
+      context: ./backend/
+      target: development
+    command: pnpm run start:dev
+    env_file:
+      - ./backend/.env
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./backend:/usr/src/app
+  sri-frontend:
+    build: 
+      context: ./frontend/
+      target: development
+    command: npm run start
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./frontend:/usr/src/app
