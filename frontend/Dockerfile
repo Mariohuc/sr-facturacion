@@ -1,17 +1,15 @@
-FROM node:14-alpine As development
-
-WORKDIR /usr/src/app
-
-COPY package.json package-lock.json ./
-
+# Stage 0, "development", based on Node.js, to build and compile the frontend
+FROM node:14-alpine as development
+WORKDIR /app
+COPY package*.json /app/
 RUN npm install
+COPY ./ /app/
+ARG configuration=production
+RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
-COPY . .
-
-RUN npm run build --prod
-
-FROM nginx:1.24.0-alpine AS production
-COPY --from=development /usr/src/app/nginx.conf /etc/nginx/nginx.conf
-COPY --from=development /usr/src/app/dist/ /usr/share/nginx/html
-
-EXPOSE 80
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+FROM nginx:1.15
+#Copy ci-dashboard-dist
+COPY --from=development /app/dist/out/ /usr/share/nginx/html
+#Copy default nginx configuration
+COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf

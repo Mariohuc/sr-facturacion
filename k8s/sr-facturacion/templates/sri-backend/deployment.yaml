@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sri-backend
+  name: sri-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sri-backend
+  template:
+    metadata:
+      labels:
+        app: sri-backend
+    spec:
+      containers:
+        - image: mariohuc/sri-backend:v1.0
+          name: sri-backend
+          env:
+            - name: DATABASE_NAME
+              value: sri_prod_db
+            - name: DATABASE_USER
+              value: sr_admin
+            - name: DATABASE_PASS
+              value: etU@Plkn
+            - name: DATABASE_HOST
+              value: "216.250.114.103"
+            - name: DATABASE_PORT
+              value: "3306"
+            - name: PORT
+              value: "3000"
+          ports:
+            - containerPort: 3000

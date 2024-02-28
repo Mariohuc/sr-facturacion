@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sri-frontend
+spec:
+  selector:
+    matchLabels:
+      app: sri-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sri-frontend
+    spec:
+      containers:
+        - name: sri-frontend-app
+          image: mariohuc/sri-frontend:v1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
