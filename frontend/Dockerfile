@@ -11,5 +11,7 @@ COPY . .
 RUN npm run build --prod
 
 FROM nginx:1.24.0-alpine AS production
-
+COPY --from=development /usr/src/app/nginx.conf /etc/nginx/nginx.conf
 COPY --from=development /usr/src/app/dist/frontend/ /usr/share/nginx/html
+
+EXPOSE 80
