@@ -1,0 +1,198 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Nueva factura</h4>
+          </div>
+          <div class="content">
+            <form [formGroup]="mainForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Nro. Factura</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="invoicing_id"
+                      placeholder=""
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Cliente</label>
+                    <select
+                      name="cliente"
+                      id="cliente"
+                      aria-controls="tickets-table"
+                      formControlName="client_id"
+                      class="form-control"
+                    >
+                      <option value="" disabled>--Selecciona--</option>
+                      <ng-container
+                        *ngFor="let item of clientStore.clients$ | async"
+                      >
+                        <option [value]="item.id">
+                          {{ item.id }} - {{ item.name }}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </div>
+
+                  <div
+                    *ngIf="mainForm.get('client_id').touched"
+                    class="d-flex flex-column invalid-feedback"
+                  >
+                    <span *ngIf="mainForm.get('client_id').hasError('required')"
+                      >Cliente es obligatorio</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Moneda</label>
+                    <select
+                      name="currency"
+                      id="currency"
+                      aria-controls="tickets-table"
+                      formControlName="currency"
+                      class="form-control"
+                    >
+                      <option value="" disabled>--Selecciona--</option>
+                      <option value="SOLES">SOLES</option>
+                      <option value="DÓLARES">DÓLARES</option>
+                    </select>
+                  </div>
+
+                  <div
+                    *ngIf="mainForm.get('currency').touched"
+                    class="d-flex flex-column invalid-feedback"
+                  >
+                    <span *ngIf="mainForm.get('currency').hasError('required')"
+                      >Moneda es obligatorio</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Fecha emisión</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      formControlName="issue_date"
+                    />
+                  </div>
+
+                  <div
+                    *ngIf="mainForm.get('issue_date').dirty"
+                    class="d-flex flex-column invalid-feedback"
+                  >
+                    <span
+                      *ngIf="mainForm.get('issue_date').hasError('required')"
+                      >Fecha de emisión es obligatorio</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Condición pago</label>
+                    <select
+                      name="payment_condition"
+                      id="payment_condition"
+                      aria-controls="tickets-table"
+                      formControlName="payment_condition"
+                      class="form-control"
+                    >
+                      <option value="" disabled>--Selecciona--</option>
+                      <option value="CONTADO">CONTADO</option>
+                      <option value="CRÉDITO">CRÉDITO</option>
+                    </select>
+                  </div>
+
+                  <div
+                    *ngIf="mainForm.get('payment_condition').touched"
+                    class="d-flex flex-column invalid-feedback"
+                  >
+                    <span
+                      *ngIf="
+                        mainForm.get('payment_condition').hasError('required')
+                      "
+                      >Condición de pago es obligatorio</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Fecha venc.</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      formControlName="due_date"
+                    />
+                  </div>
+
+                  <div
+                    *ngIf="mainForm.get('due_date').dirty"
+                    class="d-flex flex-column invalid-feedback"
+                  >
+                    <span *ngIf="mainForm.get('due_date').hasError('required')"
+                      >Fecha de vencimiento es obligatorio</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+              <div formArrayName="details">
+                <div
+                  *ngFor="
+                    let detail of InvoiceDetails.value;
+                    let itemIndex = index
+                  "
+                  [formGroupName]="itemIndex"
+                >
+                  <app-invoice-detail
+                    [readInvoiceDetail]="detail"
+                    (removeInvoiceDetailEvent)="removeInvoiceDetail(itemIndex)"
+                  ></app-invoice-detail>
+                </div>
+              </div>
+
+              <div *ngIf="mainForm.get('invoicing_id').value">
+                <app-invoice-detail
+                  [invoicingId]="mainForm.get('invoicing_id').value"
+                  (addInvoiceDetailEvent)="storeNewInvoiceDetail($event)"
+                ></app-invoice-detail>
+              </div>
+
+              <br />
+              <div>
+                <button
+                  type="submit"
+                  class="mt-4 btn btn-success btn-fill pull-left"
+                  (click)="createInvoice()"
+                  [disabled]="!mainForm.valid"
+                >
+                  Guardar
+                </button>
+                <div class="clearfix"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

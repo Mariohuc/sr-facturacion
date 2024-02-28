@@ -1,0 +1,81 @@
+<div class="main-content" >
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="header">
+                      <h4 class="title">Nuevo cliente</h4>
+                  </div>
+                  <div class="content">
+                      <form [formGroup]="mainForm">                         
+                          <div class="row">
+                              <div class="col-md-6">
+                                  
+                                    <div class="form-group">
+                                      <label>Razón social</label>
+                                      <input type="text" class="form-control" formControlName="name" placeholder="Razón social" value="Juan V">
+                                  </div>
+
+                                  <div *ngIf="mainForm.get('name').dirty" class="d-flex flex-column invalid-feedback">
+                                    <span *ngIf="mainForm.get('name').hasError('required')">Razón social es obligatorio</span>
+                                    <span *ngIf="mainForm.get('name').hasError('pattern')">Razón social es obligatorio</span>
+                                    <span *ngIf="mainForm.get('name').hasError('maxlength')">Solo se permite 50 caracteres como máximo</span>
+                                  </div>
+                                  
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Dirección</label>
+                                      <input type="text" class="form-control" formControlName="address" placeholder="" value="Av.">
+                                  </div>
+
+                                  <div *ngIf="mainForm.get('address').dirty" class="d-flex flex-column invalid-feedback">
+                                    <span *ngIf="mainForm.get('address').hasError('required')">Dirección es obligatorio</span>
+                                    <span *ngIf="mainForm.get('address').hasError('pattern')">Dirección es obligatorio</span>
+                                    <span *ngIf="mainForm.get('address').hasError('maxlength')">Solo se permite 50 caracteres como máximo</span>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                                
+                                  <div class="form-group">
+                                    <label>DNI</label>
+                                    <input type="text" class="form-control" formControlName="id_card_number" placeholder="72525555">
+                                </div>
+
+                                <div *ngIf="mainForm.get('id_card_number').dirty" class="d-flex flex-column invalid-feedback">
+                                  <span *ngIf="mainForm.get('id_card_number').hasError('required')">DNI es obligatorio</span>
+                                  <span *ngIf="mainForm.get('id_card_number').hasError('pattern')">Solo números</span>
+                                  <span *ngIf="mainForm.get('id_card_number').hasError('maxlength')">Solo se permite 20 caracteres como máximo</span>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Teléfono</label>
+                                    <input type="text" class="form-control" formControlName="phone" placeholder="">
+                                </div>
+
+                                <div *ngIf="mainForm.get('phone').dirty" class="d-flex flex-column invalid-feedback">
+                                  <span *ngIf="mainForm.get('phone').hasError('required')">Teléfono es obligatorio</span>
+                                  <span *ngIf="mainForm.get('phone').hasError('pattern')">Teléfono es obligatorio</span>
+                                  <span *ngIf="mainForm.get('phone').hasError('maxlength')">Solo se permite 20 caracteres como máximo</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div>
+                          <button type="submit" class="mt-4 btn btn-success btn-fill pull-left" (click)="createClient()" [disabled]="!mainForm.valid">Guardar</button>
+                          <div class="clearfix"></div>
+                        </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+  </div>
+</div>

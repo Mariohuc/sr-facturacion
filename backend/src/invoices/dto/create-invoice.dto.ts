@@ -15,6 +15,10 @@ import { PaymentCondition } from '../enums/payment-condition.enum';
 class InvoiceDetailItem {
   @IsString()
   invoicing_id: string;
+  @IsNumber()
+  quantity: number;
+  @IsNumber()
+  discount: number;
   @IsString()
   product_description: string;
   @IsNumber()

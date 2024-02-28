@@ -39,10 +39,16 @@ CREATE TABLE invoicing_header (
 ) ENGINE = InnoDB;
 
 CREATE TABLE invoicing_detail (
-  invoicing_id VARCHAR(20) NOT NULL PRIMARY KEY,
+  invoicing_id VARCHAR(20) NOT NULL,
+  quantity INT UNSIGNED, 
+  discount DECIMAL(20,2),
   product_description VARCHAR(100),
   product_unit_value DECIMAL(20,2),
   product_unit_code VARCHAR(50),
   product_apply_igv Tinyint(1) DEFAULT 1,
-  status Tinyint(1) DEFAULT 1
+  status Tinyint(1) DEFAULT 1,
+  CONSTRAINT `fk_invoicing_detail_header`
+    FOREIGN KEY (invoicing_id) REFERENCES invoicing_header (invoicing_id)
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT
 ) ENGINE = InnoDB;

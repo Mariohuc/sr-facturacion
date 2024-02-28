@@ -1,0 +1,109 @@
+<div class="content">
+  <form [formGroup]="detailForm">
+    <div class="row">
+      <div class="col-md-2">
+        <div *ngIf="!readonly" class="form-group">
+          <label>Producto</label>
+          <select
+            name="product"
+            id="product-select"
+            aria-controls="tickets-table"
+            class="form-control"
+            (change)="onChangeProduct($event.target.value)"
+          >
+            <option value="" disabled selected>--Selecciona--</option>
+            <ng-container *ngFor="let item of productStore.products$ | async">
+              <option [value]="item.id">
+                {{ item.id }} - {{ item.description }}
+              </option>
+            </ng-container>
+          </select>
+        </div>
+
+        <div *ngIf="readonly">
+          <div class="form-group">
+            <label>Producto</label>
+            <input type="text" class="form-control" formControlName="product_description" [readonly]="readonly"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Cantidad</label>
+          <input type="text" class="form-control" formControlName="quantity" [readonly]="readonly"/>
+        </div>
+
+        <div
+          *ngIf="detailForm.get('quantity').dirty"
+          class="d-flex flex-column invalid-feedback"
+        >
+          <span *ngIf="detailForm.get('quantity').hasError('required')"
+            >Cantidad es obligatoria</span
+          >
+          <span *ngIf="detailForm.get('quantity').hasError('pattern')"
+            >Solo números</span
+          >
+          <span *ngIf="detailForm.get('quantity').hasError('maxlength')"
+            >Solo se permite 15 caracteres como máximo</span
+          >
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Descuento</label>
+          <input type="text" class="form-control" formControlName="discount" [readonly]="readonly"/>
+        </div>
+
+        <div
+          *ngIf="detailForm.get('discount').dirty"
+          class="d-flex flex-column invalid-feedback"
+        >
+          <span *ngIf="detailForm.get('discount').hasError('pattern')"
+            >Solo números</span
+          >
+          <span *ngIf="detailForm.get('discount').hasError('maxlength')"
+            >Solo se permite 15 caracteres como máximo</span
+          >
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Precio unit.</label>
+          <input type="text" class="form-control" [value]="UnitPrice" readonly />
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Precio total</label>
+          <input type="text" class="form-control" [value]="TotalPrice" readonly />
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <button
+          *ngIf="!readonly"
+          type="submit"
+          class="my-auto btn btn-info btn-fill pull-left"
+          (click)="addInvoiceDetail()"
+          [disabled]="!detailForm.valid"
+        >
+          Guardar
+        </button>
+
+        <button
+          *ngIf="readonly"
+          type="submit"
+          class="my-auto btn btn-danger btn-fill pull-left"
+          (click)="removeInvoiceDetail()"
+          [disabled]="!detailForm.valid"
+        >
+          Remover
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

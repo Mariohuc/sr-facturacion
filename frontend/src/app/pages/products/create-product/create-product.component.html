@@ -1,0 +1,91 @@
+<div class="main-content" >
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="header">
+                      <h4 class="title">Nuevo producto</h4>
+                  </div>
+                  <div class="content">
+                      <form [formGroup]="mainForm">                         
+                          <div class="row">
+                              <div class="col-md-6">
+                                  
+                                    <div class="form-group">
+                                      <label>Descripcion</label>
+                                      <input type="text" class="form-control" formControlName="description">
+                                  </div>
+
+                                  <div *ngIf="mainForm.get('description').dirty"  class="d-flex flex-column invalid-feedback">
+                                    <span *ngIf="mainForm.get('description').hasError('required')">Descripcion es obligatorio</span>
+                                    <span *ngIf="mainForm.get('description').hasError('pattern')">Descripcion es obligatorio</span>
+                                    <span *ngIf="mainForm.get('description').hasError('maxlength')">Solo se permite 50 caracteres como máximo</span>
+                                  </div>
+                                  
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Valor unitario</label>
+                                      <input type="text" class="form-control" formControlName="unit_value" placeholder="0.00" >
+                                  </div>
+
+                                  <div *ngIf="mainForm.get('unit_value').dirty" class="d-flex flex-column invalid-feedback">
+                                    <span *ngIf="mainForm.get('unit_value').hasError('required')">Valor unitario es obligatorio</span>
+                                    <span *ngIf="mainForm.get('unit_value').hasError('pattern')">Solo números</span>
+                                    <span *ngIf="mainForm.get('unit_value').hasError('maxlength')">Solo se permite 15 caracteres como máximo</span>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                                
+                                  <div class="form-group">
+                                    <label>Código de unidad</label>
+                                    <input type="text" class="form-control" formControlName="unit_code" placeholder="NIU">
+                                </div>
+
+                                <div *ngIf="mainForm.get('unit_code').dirty" class="d-flex flex-column invalid-feedback">
+                                  <span *ngIf="mainForm.get('unit_code').hasError('required')">Código de unidad es obligatorio</span>  
+                                  <span *ngIf="mainForm.get('unit_code').hasError('maxlength')">Solo se permite 10 caracteres como máximo</span>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Stock</label>
+                                    <input type="text" class="form-control" formControlName="stock" placeholder="0">
+                                </div>
+
+                                <div *ngIf="mainForm.get('stock').dirty" class="d-flex flex-column invalid-feedback">
+                                  <span *ngIf="mainForm.get('stock').hasError('required')">Stock es obligatorio</span>
+                                  <span *ngIf="mainForm.get('stock').hasError('pattern')">Solo números</span>
+                                  <span *ngIf="mainForm.get('stock').hasError('maxlength')">Solo se permite 15 caracteres como máximo</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div>
+                              <input class="form-check-input" type="checkbox" [value]="true" formControlName="apply_igv" id="flexCheckDefault">
+                              <label class="form-check-label mx-2" for="formRadios1">
+                                  Aplicar IGV
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <br>
+                        <div>
+                          <button type="submit" class="mt-4 btn btn-success btn-fill pull-left" (click)="createProduct()" [disabled]="!mainForm.valid">Guardar</button>
+                          <div class="clearfix"></div>
+                        </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+  </div>
+</div>
